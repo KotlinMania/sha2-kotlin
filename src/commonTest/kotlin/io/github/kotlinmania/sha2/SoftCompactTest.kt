@@ -1,9 +1,9 @@
 // port-lint: ignore — Kotlin-side smoke test that the soft_compact ports of sha256 and sha512
-// reproduce the canonical FIPS 180-4 "abc" test vectors.
+// reproduce the canonical FIPS 180-4 "abc" and empty-string test vectors.
 package io.github.kotlinmania.sha2
 
-import io.github.kotlinmania.sha2.sha256.compress as compress256
-import io.github.kotlinmania.sha2.sha512.compress as compress512
+import io.github.kotlinmania.sha2.sha256.SoftCompact as Sha256SoftCompact
+import io.github.kotlinmania.sha2.sha512.SoftCompact as Sha512SoftCompact
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 
@@ -19,7 +19,7 @@ class SoftCompactTest {
         block[3] = 0x80.toByte()
         block[63] = 0x18 // length in bits = 24
 
-        compress256(state, arrayOf(block))
+        Sha256SoftCompact.compress(state, arrayOf(block))
 
         val expected = uintArrayOf(
             0xba7816bfu, 0x8f01cfeau, 0x414140deu, 0x5dae2223u,
@@ -34,7 +34,7 @@ class SoftCompactTest {
         val block = ByteArray(64)
         block[0] = 0x80.toByte()
 
-        compress256(state, arrayOf(block))
+        Sha256SoftCompact.compress(state, arrayOf(block))
 
         val expected = uintArrayOf(
             0xe3b0c442u, 0x98fc1c14u, 0x9afbf4c8u, 0x996fb924u,
@@ -53,7 +53,7 @@ class SoftCompactTest {
         block[3] = 0x80.toByte()
         block[127] = 0x18 // length in bits = 24
 
-        compress512(state, arrayOf(block))
+        Sha512SoftCompact.compress(state, arrayOf(block))
 
         val expected = ulongArrayOf(
             0xddaf35a193617abauL, 0xcc417349ae204131uL,
@@ -70,7 +70,7 @@ class SoftCompactTest {
         val block = ByteArray(128)
         block[0] = 0x80.toByte()
 
-        compress512(state, arrayOf(block))
+        Sha512SoftCompact.compress(state, arrayOf(block))
 
         val expected = ulongArrayOf(
             0xcf83e1357eefb8bduL, 0xf1542850d66d8007uL,
