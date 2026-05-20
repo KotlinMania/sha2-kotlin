@@ -27,10 +27,6 @@ name: "CodeQL Advanced"
 # 0 bytes of Kotlin TRAP, so java-kotlin stays `build-mode: manual`.
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   schedule:
     - cron: "0 7 * * 1"
   workflow_dispatch:
