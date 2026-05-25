@@ -11,7 +11,6 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.kotlin.dsl.support.serviceOf
 import org.gradle.process.ExecOperations
-import org.gradle.plugins.signing.Sign
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
@@ -513,14 +512,6 @@ mavenPublishing {
             developerConnection.set("scm:git:ssh://github.com/KotlinMania/sha2-kotlin.git")
         }
     }
-}
-
-val isPublishingToMavenLocal = gradle.startParameter.taskNames.any { taskName ->
-    taskName.contains("MavenLocal", ignoreCase = true)
-}
-
-tasks.withType<Sign>().configureEach {
-    onlyIf { !isPublishingToMavenLocal }
 }
 
 tasks.register("setupAndroidSdk") {
