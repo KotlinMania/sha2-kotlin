@@ -5,7 +5,6 @@ import io.github.kotlinmania.sha2.BLOCK_LEN
 import io.github.kotlinmania.sha2.K32X4
 
 internal object Soft {
-
     private fun shl(v: UIntArray, o: Int): UIntArray =
         uintArrayOf(v[0] shr o, v[1] shr o, v[2] shr o, v[3] shr o)
 
@@ -42,8 +41,12 @@ internal object Soft {
     private fun sha256msg2(v4: UIntArray, v3: UIntArray): UIntArray {
         fun sigma1(a: UInt): UInt = a.rotateRight(17) xor a.rotateRight(19) xor (a shr 10)
 
-        val x3 = v4[0]; val x2 = v4[1]; val x1 = v4[2]; val x0 = v4[3]
-        val w15 = v3[0]; val w14 = v3[1]
+        val x3 = v4[0]
+        val x2 = v4[1]
+        val x1 = v4[2]
+        val x0 = v4[3]
+        val w15 = v3[0]
+        val w14 = v3[1]
 
         val w16 = x0 + sigma1(w14)
         val w17 = x1 + sigma1(w15)
@@ -55,15 +58,25 @@ internal object Soft {
 
     private fun sha256DigestRoundX2(cdgh: UIntArray, abef: UIntArray, wk: UIntArray): UIntArray {
         fun bigSigma0(a: UInt): UInt = a.rotateRight(2) xor a.rotateRight(13) xor a.rotateRight(22)
+
         fun bigSigma1(a: UInt): UInt = a.rotateRight(6) xor a.rotateRight(11) xor a.rotateRight(25)
+
         // Choose, MD5F, SHA1C
         fun bool3ary202(a: UInt, b: UInt, c: UInt): UInt = c xor (a and (b xor c))
+
         // Majority, SHA1M
         fun bool3ary232(a: UInt, b: UInt, c: UInt): UInt = (a and b) xor (a and c) xor (b and c)
 
-        val wk1 = wk[2]; val wk0 = wk[3]
-        val a0 = abef[0]; val b0 = abef[1]; val e0 = abef[2]; val f0 = abef[3]
-        val c0 = cdgh[0]; val d0 = cdgh[1]; val g0 = cdgh[2]; val h0 = cdgh[3]
+        val wk1 = wk[2]
+        val wk0 = wk[3]
+        val a0 = abef[0]
+        val b0 = abef[1]
+        val e0 = abef[2]
+        val f0 = abef[3]
+        val c0 = cdgh[0]
+        val d0 = cdgh[1]
+        val g0 = cdgh[2]
+        val h0 = cdgh[3]
 
         // a round
         val x0 = bigSigma1(e0) + bool3ary202(e0, f0, g0) + wk0 + h0
@@ -118,21 +131,39 @@ internal object Soft {
         rounds4(w1, 1)
         rounds4(w2, 2)
         rounds4(w3, 3)
-        w4 = schedule(w0, w1, w2, w3); rounds4(w4, 4)
-        w0 = schedule(w1, w2, w3, w4); rounds4(w0, 5)
-        w1 = schedule(w2, w3, w4, w0); rounds4(w1, 6)
-        w2 = schedule(w3, w4, w0, w1); rounds4(w2, 7)
-        w3 = schedule(w4, w0, w1, w2); rounds4(w3, 8)
-        w4 = schedule(w0, w1, w2, w3); rounds4(w4, 9)
-        w0 = schedule(w1, w2, w3, w4); rounds4(w0, 10)
-        w1 = schedule(w2, w3, w4, w0); rounds4(w1, 11)
-        w2 = schedule(w3, w4, w0, w1); rounds4(w2, 12)
-        w3 = schedule(w4, w0, w1, w2); rounds4(w3, 13)
-        w4 = schedule(w0, w1, w2, w3); rounds4(w4, 14)
-        w0 = schedule(w1, w2, w3, w4); rounds4(w0, 15)
+        w4 = schedule(w0, w1, w2, w3)
+        rounds4(w4, 4)
+        w0 = schedule(w1, w2, w3, w4)
+        rounds4(w0, 5)
+        w1 = schedule(w2, w3, w4, w0)
+        rounds4(w1, 6)
+        w2 = schedule(w3, w4, w0, w1)
+        rounds4(w2, 7)
+        w3 = schedule(w4, w0, w1, w2)
+        rounds4(w3, 8)
+        w4 = schedule(w0, w1, w2, w3)
+        rounds4(w4, 9)
+        w0 = schedule(w1, w2, w3, w4)
+        rounds4(w0, 10)
+        w1 = schedule(w2, w3, w4, w0)
+        rounds4(w1, 11)
+        w2 = schedule(w3, w4, w0, w1)
+        rounds4(w2, 12)
+        w3 = schedule(w4, w0, w1, w2)
+        rounds4(w3, 13)
+        w4 = schedule(w0, w1, w2, w3)
+        rounds4(w4, 14)
+        w0 = schedule(w1, w2, w3, w4)
+        rounds4(w0, 15)
 
-        val a = abef[0]; val b = abef[1]; val e = abef[2]; val f = abef[3]
-        val c = cdgh[0]; val d = cdgh[1]; val g = cdgh[2]; val h = cdgh[3]
+        val a = abef[0]
+        val b = abef[1]
+        val e = abef[2]
+        val f = abef[3]
+        val c = cdgh[0]
+        val d = cdgh[1]
+        val g = cdgh[2]
+        val h = cdgh[3]
 
         state[0] = state[0] + a
         state[1] = state[1] + b

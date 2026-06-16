@@ -99,6 +99,7 @@ val requiredAndroidSdkPackageDirs =
     )
 
 fun writeAndroidLocalProperties() {
+    projectAndroidSdkDir.mkdirs()
     val sdkDirPropertyValue = projectAndroidSdkDir.absolutePath.replace("\\", "/")
     layout.projectDirectory
         .file("local.properties")
@@ -209,7 +210,7 @@ fun installProjectAndroidSdk(execOperations: ExecOperations) {
     println("setup-android-sdk: done; SDK at $projectAndroidSdkDir")
 }
 
-writeAndroidLocalProperties()
+installProjectAndroidSdk(serviceOf())
 
 val ensureAndroidSdk by tasks.registering {
     group = "setup"
@@ -352,8 +353,6 @@ kotlin {
         }
     }
 }
-
-
 
 // ============================================================================
 // Test logging

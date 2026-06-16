@@ -4,7 +4,6 @@ package io.github.kotlinmania.sha2.sha256
 import io.github.kotlinmania.sha2.K32
 
 internal object SoftCompact {
-
     private fun toU32s(block: ByteArray): UIntArray {
         val res = UIntArray(16)
         for (i in 0 until 16) {
