@@ -5,7 +5,6 @@ import io.github.kotlinmania.sha2.BLOCK_LEN
 import io.github.kotlinmania.sha2.K64X2
 
 internal object Soft {
-
     private fun add(a: ULongArray, b: ULongArray): ULongArray =
         ulongArrayOf(a[0] + b[0], a[1] + b[1])
 
@@ -23,10 +22,13 @@ internal object Soft {
         fun sigma1(x: ULong): ULong =
             ((x shl 45) or (x shr 19)) xor ((x shl 3) or (x shr 61)) xor (x shr 6)
 
-        val w1 = v0[0]; val w0 = v0[1]
+        val w1 = v0[0]
+        val w0 = v0[1]
         val w2 = v1[1]
-        val w10 = v4to5[0]; val w9 = v4to5[1]
-        val w15 = v7[0]; val w14 = v7[1]
+        val w10 = v4to5[0]
+        val w9 = v4to5[1]
+        val w15 = v7[0]
+        val w14 = v7[1]
 
         val w16 = sigma1(w14) + w9 + sigma0(w1) + w0
         val w17 = sigma1(w15) + w10 + sigma0(w2) + w1
@@ -43,16 +45,23 @@ internal object Soft {
         wk0: ULong,
     ): ULongArray {
         fun bigSigma0(a: ULong): ULong = a.rotateRight(28) xor a.rotateRight(34) xor a.rotateRight(39)
+
         fun bigSigma1(a: ULong): ULong = a.rotateRight(14) xor a.rotateRight(18) xor a.rotateRight(41)
+
         // Choose, MD5F, SHA1C
         fun bool3ary202(a: ULong, b: ULong, c: ULong): ULong = c xor (a and (b xor c))
+
         // Majority, SHA1M
         fun bool3ary232(a: ULong, b: ULong, c: ULong): ULong = (a and b) xor (a and c) xor (b and c)
 
-        val a0 = ae[0]; val e0 = ae[1]
-        val b0 = bf[0]; val f0 = bf[1]
-        val c0 = cg[0]; val g0 = cg[1]
-        val d0 = dh[0]; val h0 = dh[1]
+        val a0 = ae[0]
+        val e0 = ae[1]
+        val b0 = bf[0]
+        val f0 = bf[1]
+        val c0 = cg[0]
+        val g0 = cg[1]
+        val d0 = dh[0]
+        val h0 = dh[1]
 
         // a round
         val x0 = bigSigma1(e0) + bool3ary202(e0, f0, g0) + wk0 + h0
@@ -73,8 +82,10 @@ internal object Soft {
         var dh = ulongArrayOf(state[3], state[7])
 
         val rounds4 = { wk0: ULongArray, wk1: ULongArray ->
-            val u = wk0[0]; val t = wk0[1]
-            val w = wk1[0]; val v = wk1[1]
+            val u = wk0[0]
+            val t = wk0[1]
+            val w = wk1[0]
+            val v = wk1[1]
 
             dh = sha512DigestRound(ae, bf, cg, dh, t)
             cg = sha512DigestRound(dh, ae, bf, cg, u)
@@ -86,13 +97,17 @@ internal object Soft {
             sha512ScheduleX2(v0, v1, sha512load(v4, v5), v7)
 
         // Rounds 0..20
-        var w1 = ulongArrayOf(block[3], block[2]); var w0 = ulongArrayOf(block[1], block[0])
+        var w1 = ulongArrayOf(block[3], block[2])
+        var w0 = ulongArrayOf(block[1], block[0])
         rounds4(add(k[0], w0), add(k[1], w1))
-        var w3 = ulongArrayOf(block[7], block[6]); var w2 = ulongArrayOf(block[5], block[4])
+        var w3 = ulongArrayOf(block[7], block[6])
+        var w2 = ulongArrayOf(block[5], block[4])
         rounds4(add(k[2], w2), add(k[3], w3))
-        var w5 = ulongArrayOf(block[11], block[10]); var w4 = ulongArrayOf(block[9], block[8])
+        var w5 = ulongArrayOf(block[11], block[10])
+        var w4 = ulongArrayOf(block[9], block[8])
         rounds4(add(k[4], w4), add(k[5], w5))
-        var w7 = ulongArrayOf(block[15], block[14]); var w6 = ulongArrayOf(block[13], block[12])
+        var w7 = ulongArrayOf(block[15], block[14])
+        var w6 = ulongArrayOf(block[13], block[12])
         rounds4(add(k[6], w6), add(k[7], w7))
         var w8 = schedule(w0, w1, w4, w5, w7)
         var w9 = schedule(w1, w2, w5, w6, w8)
@@ -149,10 +164,14 @@ internal object Soft {
         w9 = schedule(w1, w2, w5, w6, w8)
         rounds4(add(k[38], w8), add(k[39], w9))
 
-        val a = ae[0]; val e = ae[1]
-        val b = bf[0]; val f = bf[1]
-        val c = cg[0]; val g = cg[1]
-        val d = dh[0]; val h = dh[1]
+        val a = ae[0]
+        val e = ae[1]
+        val b = bf[0]
+        val f = bf[1]
+        val c = cg[0]
+        val g = cg[1]
+        val d = dh[0]
+        val h = dh[1]
 
         state[0] = state[0] + a
         state[1] = state[1] + b
