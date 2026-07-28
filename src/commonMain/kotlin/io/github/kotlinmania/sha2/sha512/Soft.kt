@@ -1,4 +1,4 @@
-// port-lint: source src/sha512/soft.rs
+// port-lint: source sha512/soft.rs
 package io.github.kotlinmania.sha2.sha512
 
 import io.github.kotlinmania.sha2.BLOCK_LEN

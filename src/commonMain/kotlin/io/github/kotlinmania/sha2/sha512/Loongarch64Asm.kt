@@ -1,4 +1,4 @@
-// port-lint: source src/sha512/loongarch64_asm.rs
+// port-lint: source sha512/loongarch64_asm.rs
 package io.github.kotlinmania.sha2.sha512
 
 /** LoongArch64 assembly backend.
