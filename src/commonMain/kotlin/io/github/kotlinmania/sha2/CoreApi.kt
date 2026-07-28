@@ -12,7 +12,7 @@ import io.github.kotlinmania.sha2.sha512.compress512
  *  i.e. 224 and 256 bits respectively.
  */
 class Sha256VarCore(
-    private var state: State256,
+    private var state: UIntArray,
     private var blockLen: ULong,
 ) {
     companion object {
@@ -52,7 +52,7 @@ class Sha256VarCore(
     }
 
     /** Returns a copy of the current state. */
-    fun stateCopy(): State256 = state.copyOf()
+    fun stateCopy(): UIntArray = state.copyOf()
 }
 
 /** Core block-level SHA-512 hasher with variable output size.
@@ -61,7 +61,7 @@ class Sha256VarCore(
  *  i.e. 224, 256, 384, and 512 bits respectively.
  */
 class Sha512VarCore(
-    private var state: State512,
+    private var state: ULongArray,
     private var blockLen: ULong,
 ) {
     companion object {
@@ -103,5 +103,5 @@ class Sha512VarCore(
     }
 
     /** Returns a copy of the current state. */
-    fun stateCopy(): State512 = state.copyOf()
+    fun stateCopy(): ULongArray = state.copyOf()
 }
