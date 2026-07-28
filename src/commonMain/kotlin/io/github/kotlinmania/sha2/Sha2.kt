@@ -1,10 +1,16 @@
-// port-lint: source src/lib.rs
+// port-lint: source lib.rs
 @file:OptIn(ExperimentalUnsignedTypes::class)
 
 package io.github.kotlinmania.sha2
 
 import io.github.kotlinmania.sha2.sha256.compress256
 import io.github.kotlinmania.sha2.sha512.compress512
+
+/** SHA-512/224 hasher. Alias for [Sha512b224]. */
+typealias Sha512_224 = Sha512b224
+
+/** SHA-512/256 hasher. Alias for [Sha512b256]. */
+typealias Sha512_256 = Sha512b256
 
 private const val SHA256_BLOCK_SIZE: Int = 64
 private const val SHA512_BLOCK_SIZE: Int = 128
@@ -338,7 +344,7 @@ private class Sha512Engine(
     }
 }
 
-private inline fun padWith64BitLength(
+internal inline fun padWith64BitLength(
     buffer: ByteArray,
     bufferPos: Int,
     bitLength: ULong,
@@ -358,7 +364,7 @@ private inline fun padWith64BitLength(
     compressor(block)
 }
 
-private inline fun padWith128BitLength(
+internal inline fun padWith128BitLength(
     buffer: ByteArray,
     bufferPos: Int,
     bitLengthHigh: ULong,
@@ -395,14 +401,14 @@ private fun encodeULongState(state: ULongArray, digestSize: Int): ByteArray {
     return output.copyOf(digestSize)
 }
 
-private fun writeUIntBigEndian(value: UInt, output: ByteArray, offset: Int) {
+internal fun writeUIntBigEndian(value: UInt, output: ByteArray, offset: Int) {
     for (byteIndex in 0 until UInt.SIZE_BYTES) {
         val shift = (UInt.SIZE_BYTES - 1 - byteIndex) * Byte.SIZE_BITS
         output[offset + byteIndex] = ((value shr shift) and 0xFFu).toByte()
     }
 }
 
-private fun writeULongBigEndian(value: ULong, output: ByteArray, offset: Int) {
+internal fun writeULongBigEndian(value: ULong, output: ByteArray, offset: Int) {
     for (byteIndex in 0 until ULong.SIZE_BYTES) {
         val shift = (ULong.SIZE_BYTES - 1 - byteIndex) * Byte.SIZE_BITS
         output[offset + byteIndex] = ((value shr shift) and 0xFFuL).toByte()

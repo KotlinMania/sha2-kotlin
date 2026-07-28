@@ -1,4 +1,4 @@
-// port-lint: source src/sha512/aarch64.rs
+// port-lint: source sha512/aarch64.rs
 package io.github.kotlinmania.sha2.sha512
 
 /** SHA-512 `aarch64` backend.

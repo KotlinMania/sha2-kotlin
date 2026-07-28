@@ -4,14 +4,14 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 13/15 (86.7%)
-- **Function parity:** 36/70 matched (target 46) — 51.4%
-- **Class/type parity:** 2/10 matched (target 12) — 20.0%
-- **Combined symbol parity:** 38/80 matched (target 58) — 47.5%
+- **Files Present:** 14/15 (93.3%)
+- **Function parity:** 36/70 matched (target 98) — 51.4%
+- **Class/type parity:** 6/16 matched (target 20) — 37.5%
+- **Combined symbol parity:** 42/86 matched (target 118) — 48.8%
 - **Average inline-code cosine:** 0.45 (function body across 13 matched files)
 - **Average documentation cosine:** 0.57 (doc text across 13 matched files)
-- **Cheat-zeroed Files:** 0
-- **Critical Issues:** 7 files with <0.60 function similarity
+- **Cheat-zeroed Files:** 1
+- **Critical Issues:** 8 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
 
@@ -38,21 +38,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/3 matched (target 1)
 - **Missing types:** `State`, `MsgSchedule`, `RoundStates`
 
-### 2. sha256.aarch64
-
-- **Target:** `sha256.Aarch64 [PROVENANCE-FALLBACK]`
-- **Similarity:** 0.14
-- **Dependents:** 0
-- **Priority Score:** 50608.6
-- **Functions:** 1/6 matched (target 1)
-- **Missing functions:** `sha256_compress`, `vsha256hq_u32`, `vsha256h2q_u32`, `vsha256su0q_u32`, `vsha256su1q_u32`
-- **Types:** 0/0 matched (target 1)
-- **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `src/sha256/aarch64.rs` vs expected `sha256/aarch64.rs`
-- **Proposed provenance header:** `// port-lint: source sha256/aarch64.rs` (current: `// port-lint: source src/sha256/aarch64.rs`)
-- **Lint issues:** 1
-
-### 3. sha512.aarch64
+### 2. sha512.aarch64
 
 - **Target:** `sha512.Aarch64 [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.14
@@ -66,7 +52,35 @@ Every matched file is listed below with function and type symbol parity.
 - **Proposed provenance header:** `// port-lint: source sha512/aarch64.rs` (current: `// port-lint: source src/sha512/aarch64.rs`)
 - **Lint issues:** 1
 
-### 4. sha256.x86
+### 3. sha256.aarch64
+
+- **Target:** `sha256.Aarch64 [PROVENANCE-FALLBACK]`
+- **Similarity:** 0.14
+- **Dependents:** 0
+- **Priority Score:** 50608.6
+- **Functions:** 1/6 matched (target 1)
+- **Missing functions:** `sha256_compress`, `vsha256hq_u32`, `vsha256h2q_u32`, `vsha256su0q_u32`, `vsha256su1q_u32`
+- **Types:** 0/0 matched (target 1)
+- **Missing types:** _none_
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `src/sha256/aarch64.rs` vs expected `sha256/aarch64.rs`
+- **Proposed provenance header:** `// port-lint: source sha256/aarch64.rs` (current: `// port-lint: source src/sha256/aarch64.rs`)
+- **Lint issues:** 1
+
+### 4. lib
+
+- **Target:** `sha2.Sha2 [STUB] [PROVENANCE-FALLBACK]`
+- **Similarity:** 0.00
+- **Dependents:** 0
+- **Priority Score:** 20610.0
+- **Functions:** 0/0 matched (target 52)
+- **Missing functions:** _none_
+- **Types:** 4/6 matched (target 8)
+- **Missing types:** `Sha512_224`, `Sha512_256`
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `src/lib.rs` vs expected `lib.rs`
+- **Proposed provenance header:** `// port-lint: source lib.rs` (current: `// port-lint: source src/lib.rs`)
+- **Lint issues:** 1
+
+### 5. sha256.x86
 
 - **Target:** `sha256.X86`
 - **Similarity:** 0.27
@@ -77,7 +91,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
-### 5. sha256.soft
+### 6. sha256.soft
 
 - **Target:** `sha256.Soft [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.61
@@ -91,7 +105,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Proposed provenance header:** `// port-lint: source sha256/soft.rs` (current: `// port-lint: source src/sha256/soft.rs`)
 - **Lint issues:** 1
 
-### 6. sha512.soft
+### 7. sha512.soft
 
 - **Target:** `sha512.Soft [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.52
@@ -105,7 +119,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Proposed provenance header:** `// port-lint: source sha512/soft.rs` (current: `// port-lint: source src/sha512/soft.rs`)
 - **Lint issues:** 1
 
-### 7. sha512.soft_compact
+### 8. sha512.soft_compact
 
 - **Target:** `sha512.SoftCompact [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.71
@@ -119,7 +133,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Proposed provenance header:** `// port-lint: source sha512/soft_compact.rs` (current: `// port-lint: source src/sha512/soft_compact.rs`)
 - **Lint issues:** 1
 
-### 8. sha256.soft_compact
+### 9. sha256.soft_compact
 
 - **Target:** `sha256.SoftCompact [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.73
@@ -133,7 +147,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Proposed provenance header:** `// port-lint: source sha256/soft_compact.rs` (current: `// port-lint: source src/sha256/soft_compact.rs`)
 - **Lint issues:** 1
 
-### 9. consts
+### 10. consts
 
 - **Target:** `sha2.Consts [PROVENANCE-FALLBACK]`
 - **Similarity:** 1.00
@@ -147,7 +161,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Proposed provenance header:** `// port-lint: source consts.rs` (current: `// port-lint: source src/consts.rs`)
 - **Lint issues:** 1
 
-### 10. sha512.loongarch64_asm
+### 11. sha512.loongarch64_asm
 
 - **Target:** `sha512.Loongarch64Asm [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.06
@@ -161,7 +175,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Proposed provenance header:** `// port-lint: source sha512/loongarch64_asm.rs` (current: `// port-lint: source src/sha512/loongarch64_asm.rs`)
 - **Lint issues:** 1
 
-### 11. sha256.loongarch64_asm
+### 12. sha256.loongarch64_asm
 
 - **Target:** `sha256.Loongarch64Asm [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.07
@@ -175,7 +189,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Proposed provenance header:** `// port-lint: source sha256/loongarch64_asm.rs` (current: `// port-lint: source src/sha256/loongarch64_asm.rs`)
 - **Lint issues:** 1
 
-### 12. sha256
+### 13. sha256
 
 - **Target:** `sha256.Sha256`
 - **Similarity:** 0.74
@@ -186,7 +200,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched
 - **Missing types:** _none_
 
-### 13. sha512
+### 14. sha512
 
 - **Target:** `sha512.Sha512`
 - **Similarity:** 0.74
@@ -205,27 +219,4 @@ For each file to be considered "complete":
 - All tests ported
 - Documentation ported
 - port-lint header present
-
-## Next Commands
-
-```bash
-# Initialize task queue for systematic porting
-cd tools/ast_distance
-./ast_distance --init-tasks ../../tmp/sha2/src rust ../../src/commonMain/kotlin/io/github/kotlinmania/sha2 kotlin tasks.json ../../AGENTS.md
-
-# Get next high-priority task
-./ast_distance --assign tasks.json <agent-id>
-```
-## Reexport / Wiring Modules
-
-These files match `reexport_modules` patterns in `.ast_distance_config.json`. They are filtered out of
-normal priority and missing-file ladders because they are wiring
-modules, not direct logic ports. Consult them for call-site routing;
-do not treat them as the next implementation target by default.
-
-### Missing
-
-| Source | Expected target | Deps | Source path | Expected path |
-|--------|-----------------|------|-------------|---------------|
-| `lib` | `Lib` | 0 | `lib.rs` | `Lib.kt` |
 
