@@ -6,20 +6,15 @@ package io.github.kotlinmania.sha2
 import io.github.kotlinmania.sha2.sha256.compress256
 import io.github.kotlinmania.sha2.sha512.compress512
 
-/** SHA-512/224 hasher. Alias for [Sha512b224]. */
-typealias Sha512_224 = Sha512b224
-
-/** SHA-512/256 hasher. Alias for [Sha512b256]. */
-typealias Sha512_256 = Sha512b256
-
 private const val SHA256_BLOCK_SIZE: Int = 64
 private const val SHA512_BLOCK_SIZE: Int = 128
 private const val SHA224_OUTPUT_SIZE: Int = 28
 private const val SHA256_OUTPUT_SIZE: Int = 32
 private const val SHA384_OUTPUT_SIZE: Int = 48
 private const val SHA512_OUTPUT_SIZE: Int = 64
-private const val SHA512_224_OUTPUT_SIZE: Int = 28
-private const val SHA512_256_OUTPUT_SIZE: Int = 32
+private const val SHA512B224_OUTPUT_SIZE: Int = 28
+private const val SHA512B256_OUTPUT_SIZE: Int = 32
+
 
 class Sha224 private constructor(
     private val engine: Sha256Engine,
@@ -148,7 +143,7 @@ class Sha512 private constructor(
 class Sha512b224 private constructor(
     private val engine: Sha512Engine,
 ) {
-    constructor() : this(Sha512Engine(H512_224, SHA512_224_OUTPUT_SIZE))
+    constructor() : this(Sha512Engine(H512_224, SHA512B224_OUTPUT_SIZE))
 
     fun update(data: ByteArray) {
         engine.update(data)
@@ -163,7 +158,7 @@ class Sha512b224 private constructor(
     }
 
     val blockSize: Int get() = SHA512_BLOCK_SIZE
-    val outputSize: Int get() = SHA512_224_OUTPUT_SIZE
+    val outputSize: Int get() = SHA512B224_OUTPUT_SIZE
 
     companion object {
         fun new(): Sha512b224 = Sha512b224()
@@ -179,7 +174,7 @@ class Sha512b224 private constructor(
 class Sha512b256 private constructor(
     private val engine: Sha512Engine,
 ) {
-    constructor() : this(Sha512Engine(H512_256, SHA512_256_OUTPUT_SIZE))
+    constructor() : this(Sha512Engine(H512_256, SHA512B256_OUTPUT_SIZE))
 
     fun update(data: ByteArray) {
         engine.update(data)
@@ -194,7 +189,7 @@ class Sha512b256 private constructor(
     }
 
     val blockSize: Int get() = SHA512_BLOCK_SIZE
-    val outputSize: Int get() = SHA512_256_OUTPUT_SIZE
+    val outputSize: Int get() = SHA512B256_OUTPUT_SIZE
 
     companion object {
         fun new(): Sha512b256 = Sha512b256()
