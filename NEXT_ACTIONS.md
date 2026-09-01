@@ -6,10 +6,10 @@ Based on AST analysis, here are the concrete next steps.
 
 - **Files Present:** 15/15 (100.0%)
 - **Function parity:** 39/65 matched (target 106) — 60.0%
-- **Class/type parity:** 8/16 matched (target 22) — 50.0%
-- **Combined symbol parity:** 47/81 matched (target 128) — 58.0%
+- **Class/type parity:** 10/16 matched (target 24) — 62.5%
+- **Combined symbol parity:** 49/81 matched (target 130) — 60.5%
 - **Average inline-code cosine:** 0.41 (function body across 15 matched files)
-- **Average documentation cosine:** 0.54 (doc text across 15 matched files)
+- **Average documentation cosine:** 0.58 (doc text across 15 matched files)
 - **Cheat-zeroed Files:** 1
 - **Critical Issues:** 9 files with <0.60 function similarity
 
@@ -71,18 +71,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
-### 5. lib
-
-- **Target:** `sha2.Sha2 [ZERO]`
-- **Similarity:** 0.00
-- **Dependents:** 0
-- **Priority Score:** 20610.0
-- **Functions:** 0/0 matched (target 52)
-- **Missing functions:** _none_
-- **Types:** 4/6 matched (target 8)
-- **Missing types:** `Sha512_224`, `Sha512_256`
-
-### 6. sha256.x86
+### 5. sha256.x86
 
 - **Target:** `sha256.X86`
 - **Similarity:** 0.27
@@ -93,7 +82,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
-### 7. sha256.soft
+### 6. sha256.soft
 
 - **Target:** `sha256.Soft`
 - **Similarity:** 0.61
@@ -104,7 +93,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
-### 8. sha512.soft
+### 7. sha512.soft
 
 - **Target:** `sha512.Soft`
 - **Similarity:** 0.52
@@ -113,6 +102,17 @@ Every matched file is listed below with function and type symbol parity.
 - **Functions:** 8/8 matched (target 13)
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 1)
+- **Missing types:** _none_
+
+### 8. lib
+
+- **Target:** `sha2.Sha2 [ZERO]`
+- **Similarity:** 0.00
+- **Dependents:** 0
+- **Priority Score:** 610.0
+- **Functions:** 0/0 matched (target 52)
+- **Missing functions:** _none_
+- **Types:** 6/6 matched (target 10)
 - **Missing types:** _none_
 
 ### 9. sha512.soft_compact
