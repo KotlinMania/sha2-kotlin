@@ -16,6 +16,7 @@ private const val SHA512B224_OUTPUT_SIZE: Int = 28
 private const val SHA512B256_OUTPUT_SIZE: Int = 32
 
 
+/** SHA-224 hasher. */
 class Sha224 private constructor(
     private val engine: Sha256Engine,
 ) {
@@ -47,6 +48,7 @@ class Sha224 private constructor(
     }
 }
 
+/** SHA-256 hasher. */
 class Sha256 private constructor(
     private val engine: Sha256Engine,
 ) {
@@ -78,6 +80,7 @@ class Sha256 private constructor(
     }
 }
 
+/** SHA-384 hasher. */
 class Sha384 private constructor(
     private val engine: Sha512Engine,
 ) {
@@ -109,6 +112,7 @@ class Sha384 private constructor(
     }
 }
 
+/** SHA-512 hasher. */
 class Sha512 private constructor(
     private val engine: Sha512Engine,
 ) {
@@ -140,6 +144,7 @@ class Sha512 private constructor(
     }
 }
 
+/** SHA-512/224 hasher. */
 class Sha512b224 private constructor(
     private val engine: Sha512Engine,
 ) {
@@ -171,6 +176,7 @@ class Sha512b224 private constructor(
     }
 }
 
+/** SHA-512/256 hasher. */
 class Sha512b256 private constructor(
     private val engine: Sha512Engine,
 ) {
@@ -201,6 +207,7 @@ class Sha512b256 private constructor(
         }
     }
 }
+
 
 private class Sha256Engine(
     private val initialState: UIntArray,

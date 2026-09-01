@@ -1,6 +1,6 @@
 # port-lint Proposed Changes
 
-**Generated:** 2026-08-28
+**Generated:** 2026-09-01
 **Source:** tmp/sha2/src
 **Target:** src/commonMain/kotlin/io/github/kotlinmania/sha2
 
