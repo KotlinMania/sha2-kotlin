@@ -21,11 +21,12 @@ class Sha256VarCore(
 
         /** Creates a new core for the given output size (28 or 32 bytes). */
         fun new(outputSize: Int): Sha256VarCore {
-            val initialState = when (outputSize) {
-                28 -> H256_224
-                32 -> H256_256
-                else -> throw IllegalArgumentException("Invalid output size: $outputSize")
-            }
+            val initialState =
+                when (outputSize) {
+                    28 -> H256_224
+                    32 -> H256_256
+                    else -> throw IllegalArgumentException("Invalid output size: $outputSize")
+                }
             return Sha256VarCore(initialState.copyOf(), 0uL)
         }
     }
@@ -70,13 +71,14 @@ class Sha512VarCore(
 
         /** Creates a new core for the given output size (28, 32, 48, or 64 bytes). */
         fun new(outputSize: Int): Sha512VarCore {
-            val initialState = when (outputSize) {
-                28 -> H512_224
-                32 -> H512_256
-                48 -> H512_384
-                64 -> H512_512
-                else -> throw IllegalArgumentException("Invalid output size: $outputSize")
-            }
+            val initialState =
+                when (outputSize) {
+                    28 -> H512_224
+                    32 -> H512_256
+                    48 -> H512_384
+                    64 -> H512_512
+                    else -> throw IllegalArgumentException("Invalid output size: $outputSize")
+                }
             return Sha512VarCore(initialState.copyOf(), 0uL)
         }
     }
