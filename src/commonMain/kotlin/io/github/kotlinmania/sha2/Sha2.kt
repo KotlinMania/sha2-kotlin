@@ -1,8 +1,11 @@
-// port-lint: source lib.rs
 @file:OptIn(ExperimentalUnsignedTypes::class)
 
 package io.github.kotlinmania.sha2
 
+import io.github.kotlinmania.digest.BlockSizeUser
+import io.github.kotlinmania.digest.Digest
+import io.github.kotlinmania.digest.DigestFactory
+import io.github.kotlinmania.digest.Output
 import io.github.kotlinmania.sha2.sha256.compress256
 import io.github.kotlinmania.sha2.sha512.compress512
 
@@ -12,200 +15,365 @@ private const val SHA224_OUTPUT_SIZE: Int = 28
 private const val SHA256_OUTPUT_SIZE: Int = 32
 private const val SHA384_OUTPUT_SIZE: Int = 48
 private const val SHA512_OUTPUT_SIZE: Int = 64
-private const val SHA512B224_OUTPUT_SIZE: Int = 28
-private const val SHA512B256_OUTPUT_SIZE: Int = 32
+private const val SHA512_224_OUTPUT_SIZE: Int = 28
+private const val SHA512_256_OUTPUT_SIZE: Int = 32
 
 /** SHA-224 hasher. */
 class Sha224 private constructor(
     private val engine: Sha256Engine,
-) {
+) : Digest,
+    BlockSizeUser {
     constructor() : this(Sha256Engine(H256_224, SHA224_OUTPUT_SIZE))
 
-    fun update(data: ByteArray) {
+    override fun update(data: ByteArray) {
         engine.update(data)
     }
 
-    fun finalize(): ByteArray = engine.finalize()
+    override fun finalize(): ByteArray = engine.finalize()
 
-    fun finalizeReset(): ByteArray = engine.finalizeReset()
+    override fun finalizeReset(): ByteArray = engine.finalizeReset()
 
-    fun reset() {
+    override fun finalizeInto(out: Output<*>) {
+        val result = finalize()
+        result.copyInto(out)
+    }
+
+    override fun finalizeIntoReset(out: Output<*>) {
+        val result = finalizeReset()
+        result.copyInto(out)
+    }
+
+    override fun reset() {
         engine.reset()
     }
 
-    val blockSize: Int get() = SHA256_BLOCK_SIZE
-    val outputSize: Int get() = SHA224_OUTPUT_SIZE
+    fun copy(): Sha224 = Sha224(engine.copy())
+
+    override val blockSize: Int get() = SHA256_BLOCK_SIZE
+    override val outputSize: Int get() = SHA224_OUTPUT_SIZE
 
     companion object {
+        init {
+            Digest.register(
+                Sha224::class,
+                object : DigestFactory<Sha224> {
+                    override fun new(): Sha224 = Sha224()
+
+                    override val outputSize: Int = SHA224_OUTPUT_SIZE
+                    override val blockSize: Int = SHA256_BLOCK_SIZE
+                },
+            )
+        }
+
         fun new(): Sha224 = Sha224()
 
-        fun digest(data: ByteArray): ByteArray {
+        fun newWithPrefix(data: ByteArray): Sha224 {
             val hasher = Sha224()
             hasher.update(data)
-            return hasher.finalize()
+            return hasher
         }
+
+        fun digest(data: ByteArray): ByteArray = Digest.digest(Sha224::class, data)
     }
 }
 
 /** SHA-256 hasher. */
 class Sha256 private constructor(
     private val engine: Sha256Engine,
-) {
+) : Digest,
+    BlockSizeUser {
     constructor() : this(Sha256Engine(H256_256, SHA256_OUTPUT_SIZE))
 
-    fun update(data: ByteArray) {
+    override fun update(data: ByteArray) {
         engine.update(data)
     }
 
-    fun finalize(): ByteArray = engine.finalize()
+    override fun finalize(): ByteArray = engine.finalize()
 
-    fun finalizeReset(): ByteArray = engine.finalizeReset()
+    override fun finalizeReset(): ByteArray = engine.finalizeReset()
 
-    fun reset() {
+    override fun finalizeInto(out: Output<*>) {
+        val result = finalize()
+        result.copyInto(out)
+    }
+
+    override fun finalizeIntoReset(out: Output<*>) {
+        val result = finalizeReset()
+        result.copyInto(out)
+    }
+
+    override fun reset() {
         engine.reset()
     }
 
-    val blockSize: Int get() = SHA256_BLOCK_SIZE
-    val outputSize: Int get() = SHA256_OUTPUT_SIZE
+    fun copy(): Sha256 = Sha256(engine.copy())
+
+    override val blockSize: Int get() = SHA256_BLOCK_SIZE
+    override val outputSize: Int get() = SHA256_OUTPUT_SIZE
 
     companion object {
+        init {
+            Digest.register(
+                Sha256::class,
+                object : DigestFactory<Sha256> {
+                    override fun new(): Sha256 = Sha256()
+
+                    override val outputSize: Int = SHA256_OUTPUT_SIZE
+                    override val blockSize: Int = SHA256_BLOCK_SIZE
+                },
+            )
+        }
+
         fun new(): Sha256 = Sha256()
 
-        fun digest(data: ByteArray): ByteArray {
+        fun newWithPrefix(data: ByteArray): Sha256 {
             val hasher = Sha256()
             hasher.update(data)
-            return hasher.finalize()
+            return hasher
         }
+
+        fun digest(data: ByteArray): ByteArray = Digest.digest(Sha256::class, data)
     }
 }
 
 /** SHA-384 hasher. */
 class Sha384 private constructor(
     private val engine: Sha512Engine,
-) {
+) : Digest,
+    BlockSizeUser {
     constructor() : this(Sha512Engine(H512_384, SHA384_OUTPUT_SIZE))
 
-    fun update(data: ByteArray) {
+    override fun update(data: ByteArray) {
         engine.update(data)
     }
 
-    fun finalize(): ByteArray = engine.finalize()
+    override fun finalize(): ByteArray = engine.finalize()
 
-    fun finalizeReset(): ByteArray = engine.finalizeReset()
+    override fun finalizeReset(): ByteArray = engine.finalizeReset()
 
-    fun reset() {
+    override fun finalizeInto(out: Output<*>) {
+        val result = finalize()
+        result.copyInto(out)
+    }
+
+    override fun finalizeIntoReset(out: Output<*>) {
+        val result = finalizeReset()
+        result.copyInto(out)
+    }
+
+    override fun reset() {
         engine.reset()
     }
 
-    val blockSize: Int get() = SHA512_BLOCK_SIZE
-    val outputSize: Int get() = SHA384_OUTPUT_SIZE
+    fun copy(): Sha384 = Sha384(engine.copy())
+
+    override val blockSize: Int get() = SHA512_BLOCK_SIZE
+    override val outputSize: Int get() = SHA384_OUTPUT_SIZE
 
     companion object {
+        init {
+            Digest.register(
+                Sha384::class,
+                object : DigestFactory<Sha384> {
+                    override fun new(): Sha384 = Sha384()
+
+                    override val outputSize: Int = SHA384_OUTPUT_SIZE
+                    override val blockSize: Int = SHA512_BLOCK_SIZE
+                },
+            )
+        }
+
         fun new(): Sha384 = Sha384()
 
-        fun digest(data: ByteArray): ByteArray {
+        fun newWithPrefix(data: ByteArray): Sha384 {
             val hasher = Sha384()
             hasher.update(data)
-            return hasher.finalize()
+            return hasher
         }
+
+        fun digest(data: ByteArray): ByteArray = Digest.digest(Sha384::class, data)
     }
 }
 
 /** SHA-512 hasher. */
 class Sha512 private constructor(
     private val engine: Sha512Engine,
-) {
+) : Digest,
+    BlockSizeUser {
     constructor() : this(Sha512Engine(H512_512, SHA512_OUTPUT_SIZE))
 
-    fun update(data: ByteArray) {
+    override fun update(data: ByteArray) {
         engine.update(data)
     }
 
-    fun finalize(): ByteArray = engine.finalize()
+    override fun finalize(): ByteArray = engine.finalize()
 
-    fun finalizeReset(): ByteArray = engine.finalizeReset()
+    override fun finalizeReset(): ByteArray = engine.finalizeReset()
 
-    fun reset() {
+    override fun finalizeInto(out: Output<*>) {
+        val result = finalize()
+        result.copyInto(out)
+    }
+
+    override fun finalizeIntoReset(out: Output<*>) {
+        val result = finalizeReset()
+        result.copyInto(out)
+    }
+
+    override fun reset() {
         engine.reset()
     }
 
-    val blockSize: Int get() = SHA512_BLOCK_SIZE
-    val outputSize: Int get() = SHA512_OUTPUT_SIZE
+    fun copy(): Sha512 = Sha512(engine.copy())
+
+    override val blockSize: Int get() = SHA512_BLOCK_SIZE
+    override val outputSize: Int get() = SHA512_OUTPUT_SIZE
 
     companion object {
+        init {
+            Digest.register(
+                Sha512::class,
+                object : DigestFactory<Sha512> {
+                    override fun new(): Sha512 = Sha512()
+
+                    override val outputSize: Int = SHA512_OUTPUT_SIZE
+                    override val blockSize: Int = SHA512_BLOCK_SIZE
+                },
+            )
+        }
+
         fun new(): Sha512 = Sha512()
 
-        fun digest(data: ByteArray): ByteArray {
+        fun newWithPrefix(data: ByteArray): Sha512 {
             val hasher = Sha512()
             hasher.update(data)
-            return hasher.finalize()
+            return hasher
         }
+
+        fun digest(data: ByteArray): ByteArray = Digest.digest(Sha512::class, data)
     }
 }
 
 /** SHA-512/224 hasher. */
 class Sha512b224 private constructor(
     private val engine: Sha512Engine,
-) {
-    constructor() : this(Sha512Engine(H512_224, SHA512B224_OUTPUT_SIZE))
+) : Digest,
+    BlockSizeUser {
+    constructor() : this(Sha512Engine(H512_224, SHA512_224_OUTPUT_SIZE))
 
-    fun update(data: ByteArray) {
+    override fun update(data: ByteArray) {
         engine.update(data)
     }
 
-    fun finalize(): ByteArray = engine.finalize()
+    override fun finalize(): ByteArray = engine.finalize()
 
-    fun finalizeReset(): ByteArray = engine.finalizeReset()
+    override fun finalizeReset(): ByteArray = engine.finalizeReset()
 
-    fun reset() {
+    override fun finalizeInto(out: Output<*>) {
+        val result = finalize()
+        result.copyInto(out)
+    }
+
+    override fun finalizeIntoReset(out: Output<*>) {
+        val result = finalizeReset()
+        result.copyInto(out)
+    }
+
+    override fun reset() {
         engine.reset()
     }
 
-    val blockSize: Int get() = SHA512_BLOCK_SIZE
-    val outputSize: Int get() = SHA512B224_OUTPUT_SIZE
+    fun copy(): Sha512b224 = Sha512b224(engine.copy())
+
+    override val blockSize: Int get() = SHA512_BLOCK_SIZE
+    override val outputSize: Int get() = SHA512_224_OUTPUT_SIZE
 
     companion object {
+        init {
+            Digest.register(
+                Sha512b224::class,
+                object : DigestFactory<Sha512b224> {
+                    override fun new(): Sha512b224 = Sha512b224()
+
+                    override val outputSize: Int = SHA512_224_OUTPUT_SIZE
+                    override val blockSize: Int = SHA512_BLOCK_SIZE
+                },
+            )
+        }
+
         fun new(): Sha512b224 = Sha512b224()
 
-        fun digest(data: ByteArray): ByteArray {
+        fun newWithPrefix(data: ByteArray): Sha512b224 {
             val hasher = Sha512b224()
             hasher.update(data)
-            return hasher.finalize()
+            return hasher
         }
+
+        fun digest(data: ByteArray): ByteArray = Digest.digest(Sha512b224::class, data)
     }
 }
 
 /** SHA-512/256 hasher. */
 class Sha512b256 private constructor(
     private val engine: Sha512Engine,
-) {
-    constructor() : this(Sha512Engine(H512_256, SHA512B256_OUTPUT_SIZE))
+) : Digest,
+    BlockSizeUser {
+    constructor() : this(Sha512Engine(H512_256, SHA512_256_OUTPUT_SIZE))
 
-    fun update(data: ByteArray) {
+    override fun update(data: ByteArray) {
         engine.update(data)
     }
 
-    fun finalize(): ByteArray = engine.finalize()
+    override fun finalize(): ByteArray = engine.finalize()
 
-    fun finalizeReset(): ByteArray = engine.finalizeReset()
+    override fun finalizeReset(): ByteArray = engine.finalizeReset()
 
-    fun reset() {
+    override fun finalizeInto(out: Output<*>) {
+        val result = finalize()
+        result.copyInto(out)
+    }
+
+    override fun finalizeIntoReset(out: Output<*>) {
+        val result = finalizeReset()
+        result.copyInto(out)
+    }
+
+    override fun reset() {
         engine.reset()
     }
 
-    val blockSize: Int get() = SHA512_BLOCK_SIZE
-    val outputSize: Int get() = SHA512B256_OUTPUT_SIZE
+    fun copy(): Sha512b256 = Sha512b256(engine.copy())
+
+    override val blockSize: Int get() = SHA512_BLOCK_SIZE
+    override val outputSize: Int get() = SHA512_256_OUTPUT_SIZE
 
     companion object {
+        init {
+            Digest.register(
+                Sha512b256::class,
+                object : DigestFactory<Sha512b256> {
+                    override fun new(): Sha512b256 = Sha512b256()
+
+                    override val outputSize: Int = SHA512_256_OUTPUT_SIZE
+                    override val blockSize: Int = SHA512_BLOCK_SIZE
+                },
+            )
+        }
+
         fun new(): Sha512b256 = Sha512b256()
 
-        fun digest(data: ByteArray): ByteArray {
+        fun newWithPrefix(data: ByteArray): Sha512b256 {
             val hasher = Sha512b256()
             hasher.update(data)
-            return hasher.finalize()
+            return hasher
         }
+
+        fun digest(data: ByteArray): ByteArray = Digest.digest(Sha512b256::class, data)
     }
 }
+
+typealias Sha512_224 = Sha512b224
+typealias Sha512_256 = Sha512b256
 
 private class Sha256Engine(
     private val initialState: UIntArray,
@@ -265,6 +433,15 @@ private class Sha256Engine(
         buffer.fill(0)
         bufferPos = 0
         bitLength = 0u
+    }
+
+    fun copy(): Sha256Engine {
+        val engine = Sha256Engine(initialState, digestSize)
+        state.copyInto(engine.state)
+        buffer.copyInto(engine.buffer)
+        engine.bufferPos = bufferPos
+        engine.bitLength = bitLength
+        return engine
     }
 
     private fun addBitLength(byteCount: Int) {
@@ -332,6 +509,16 @@ private class Sha512Engine(
         bufferPos = 0
         bitLengthHigh = 0u
         bitLengthLow = 0u
+    }
+
+    fun copy(): Sha512Engine {
+        val engine = Sha512Engine(initialState, digestSize)
+        state.copyInto(engine.state)
+        buffer.copyInto(engine.buffer)
+        engine.bufferPos = bufferPos
+        engine.bitLengthHigh = bitLengthHigh
+        engine.bitLengthLow = bitLengthLow
+        return engine
     }
 
     private fun addBitLength(byteCount: Int) {
